@@ -22,16 +22,15 @@ def home():
     return render_template('index.html', data=insertObject)
 
 #Ruta para guardar usuarios en la bdd
-@app.route('/user', methods=['POST'])
-def addUser():
-    name = request.form['name']
-    type = request.form['tipo']
-    rare = request.form['rareza']
-
-    if name and type and rare:
+@app.route('/poke', methods=['POST'])
+def addPoke():
+    Nombre = request.form['nombre']
+    Tipo = request.form['tipo']
+    Generacion = request.form['gen']
+    if Nombre and Tipo and Generacion:
         cursor = db.database.cursor()
-        sql = "INSERT INTO pokes (name, type, rare) VALUES (%s, %s, %s)"
-        data = (name, type, rare)
+        sql = "INSERT INTO pokes (Nombre, Tipo, Generacion) VALUES (%s, %s, %s)"
+        data = (Nombre, Tipo, Generacion)
         cursor.execute(sql, data)
         db.database.commit()
     return redirect(url_for('home'))
@@ -47,14 +46,14 @@ def delete(id):
 
 @app.route('/edit/<string:id>', methods=['POST'])
 def edit(id):
-    name = request.form['name']
-    type = request.form['type']
-    rare = request.form['rare']
+    Nombre = request.form['nombre']
+    Tipo = request.form['tipo']
+    Generacion = request.form['gen']
 
-    if name and type and rare:
+    if Nombre and Tipo and Generacion:
         cursor = db.database.cursor()
-        sql = "UPDATE pokes SET name = %s, type = %s, rare = %s WHERE id = %s"
-        data = (name, type, rare, id)
+        sql = "UPDATE pokes SET Nombre = %s, Tipo = %s, Generacion = %s WHERE id = %s"
+        data = (Nombre, Tipo, Generacion, id)
         cursor.execute(sql, data)
         db.database.commit()
     return redirect(url_for('home'))
